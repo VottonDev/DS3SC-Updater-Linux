@@ -30,7 +30,7 @@ readonly TEMP_ZIP_PATH="/tmp/ersc_update.zip"
 
 # Prints a formatted informational message.
 log_info() {
-    echo -e "\n[INFO] $1"
+    echo -e "\n[INFO] $1" >&2
 }
 
 # Prints a formatted error message to stderr and exits the script.
