@@ -1,134 +1,157 @@
-    Elden Ring Seamless CO-OP Linux Installer and Updater
-# Elden Ring Seamless Co-op Linux Updater
+# Dark Souls 3 Seamless Co-op Linux Installer/Updater
 
-To set the script as executable:
-This script automates the process of updating the [Elden Ring Seamless Co-op mod](https://www.nexusmods.com/eldenring/mods/510) on Linux systems. It simplifies the installation and update process by automatically detecting your Elden Ring game directory, downloading the latest mod release, backing up your existing settings, and replacing the necessary files.
+This script automates the process of installing and updating the [Dark Souls 3 Seamless Co-op mod](https://www.nexusmods.com/darksouls3/mods/1895) on Linux systems. It simplifies the installation by extracting the mod files, backing up your existing settings, and providing clear launch instructions.
 
 ## Features
 
-** Terminal Emulator **
-*   **Automatic Detection:** Finds your Elden Ring installation whether it's a native Steam install or a Flatpak Steam install.
-*   **Latest Release Download:** Automatically fetches the most recent `ersc.zip` from the official GitHub repository.
-*   **Settings Backup:** Preserves your `ersc_settings.ini` file, prompting you if changes are detected.
-*   **Executable Management:** Backs up the original game executable and replaces it with the mod's launcher.
-*   **Clean-up:** Removes temporary download files after a successful update.
+* **Automatic Zip Detection:** If no path is provided, automatically finds the most recent `DS3 Seamless Co-op*.zip` file in your `~/Downloads` folder.
+* **Settings Backup:** Preserves your `ds3sc_settings.ini` file across updates, prompting you if changes are detected.
+* **Installation Verification:** Confirms that all essential mod files are in place after extraction.
+* **Clear Launch Instructions:** Provides the exact Steam launch options needed to play.
 
-Use chmod +x ./ersc-update.sh from the folder you have downloaded the script to.
 ## Prerequisites
 
-Then type ./ersc-update.sh
-Before running the script, ensure you have the following tools installed on your system:
+Before running the script, ensure you have the following installed:
 
-*   `curl`
-*   `wget`
-*   `unzip`
+* `unzip`
 
-These are typically pre-installed on most Linux distributions.
+This is typically pre-installed on most Linux distributions.
+
+**Note:** Since the mod is hosted on Nexus Mods (which has no public API), you must download the mod zip file manually before running this script.
 
 ## How to Use
 
-** Desktop Environment GUI **
-### 1. Download the Script
+### 1. Download the Mod
 
-Note: The exact steps and terminology may vary slightly depending on your specific desktop environment (e.g., GNOME, KDE, MATE).
-Save the `ersc-update.sh` script to a convenient location on your computer (e.g., `~/Downloads` or `~/Scripts`).
+Visit the [Dark Souls 3 Seamless Co-op Nexus page](https://www.nexusmods.com/darksouls3/mods/1895) and download the latest release zip file.
 
+### 2. Download the Script
 
-### 2. Make the Script Executable
+Save the `ds3sc-update.sh` script to a convenient location on your computer (e.g., `~/Downloads` or `~/Scripts`).
 
-Open the "Files" app.
+### 3. Make the Script Executable
+
 The script needs executable permissions to run. Choose one of the methods below:
 
-Navigate to the script's location.
 #### Via Terminal
 
-Right-click on the script and select "Properties."
 Open your terminal, navigate to the directory where you saved the script, and run:
 
-Go to the "Permissions" tab.
 ```bash
-chmod +x ./ersc-update.sh
+chmod +x ./ds3sc-update.sh
 ```
 
-Check the "Allow executing file as a program" box.
 #### Via Desktop Environment (GUI)
 
-Click "Close."
-*   **Note:** The exact steps and terminology may vary slightly depending on your specific desktop environment (e.g., GNOME, KDE Plasma, XFCE, MATE).
+* **Note:** The exact steps and terminology may vary slightly depending on your specific desktop environment (e.g., GNOME, KDE Plasma, XFCE, MATE).
 
-Then run the script.
-*   **Example (GNOME):**
-    1.  Open your file manager (e.g., "Files").
-    2.  Navigate to the script's location.
-    3.  Right-click on `ersc-update.sh` and select "Properties" (or "Permissions").
-    4.  Go to the "Permissions" tab.
-    5.  Check the box labeled "Allow executing file as a program" or similar.
-    6.  Click "Close" or "OK".
+* **Example (GNOME):**
+    1. Open your file manager (e.g., "Files").
+    2. Navigate to the script's location.
+    3. Right-click on `ds3sc-update.sh` and select "Properties" (or "Permissions").
+    4. Go to the "Permissions" tab.
+    5. Check the box labeled "Allow executing file as a program" or similar.
+    6. Click "Close" or "OK".
 
-### 3. Run the Script
+### 4. Configure the Game Directory
 
-** Other Notes **
-Once the script is executable, you can run it from your terminal:
+**Important:** Before running the script, you need to edit it to set your Dark Souls III game directory path. Open `ds3sc-update.sh` in a text editor and modify this line:
 
-Run this script and you will not have to change steam options. Just run the game as normal and it will automatically run the elden ring seamless coop mod. If you wish to restore your game. Just run the built in steam integrity check to restore the games original executable file. Alternatively it will be in your game folder named start_protected_game.exe.backup. You can rename this back to the original exe file name start_protected_game.exe and your game will be restored.
 ```bash
-./ersc-update.sh
+readonly GAME_DIR="/run/media/votton/Data/SteamLibrary/steamapps/common/DARK SOULS III/Game"
 ```
 
-The script will guide you through the update process with on-screen messages.
+Replace the path with your actual Dark Souls III `Game` directory location. Common paths include:
 
-## Important Notes & Restoration
+* Native Steam: `~/.steam/steam/steamapps/common/DARK SOULS III/Game`
+* Flatpak Steam: `~/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/DARK SOULS III/Game`
+* Custom library: `/path/to/your/SteamLibrary/steamapps/common/DARK SOULS III/Game`
 
-*   **No Steam Launch Options Needed:** After running this script, you do not need to change any Steam launch options. Simply launch Elden Ring as you normally would from your Steam library, and the Seamless Co-op mod will automatically load.
+### 5. Run the Script
 
-*   **Restoring the Original Game:** If you wish to revert to the vanilla (unmodded) Elden Ring executable, you have two options:
-    *   **Steam's "Verify Integrity of Game Files":** The easiest method is to use Steam's built-in "Verify integrity of game files..." feature. This will detect the modified executable and replace it with the original.
-    *   **Manual Restoration:** The script creates a backup of your original `start_protected_game.exe` named `start_protected_game.exe.backup` in your game's `Game` directory. You can manually restore it by:
-        1.  Navigating to your Elden Ring `Game` directory (e.g., `~/.steam/steam/steamapps/common/ELDEN RING/Game`).
-        2.  Deleting the current `start_protected_game.exe` (which is the mod launcher).
-        3.  Renaming `start_protected_game.exe.backup` to `start_protected_game.exe`.
+Once configured, you can run the script:
+
+```bash
+# Auto-detect zip in ~/Downloads
+./ds3sc-update.sh
+
+# Or specify a zip file path directly
+./ds3sc-update.sh /path/to/your/downloaded/mod.zip
+```
+
+The script will:
+1. Find the mod zip file (auto-detect or use provided path)
+2. Verify your Dark Souls III installation
+3. Back up your existing settings (if any)
+4. Extract the mod files
+5. Restore your settings
+6. Display launch instructions
+
+## How to Play
+
+After installation, you need to configure Steam to launch the mod:
+
+1. **Set your co-op password** in `SeamlessCoop/ds3sc_settings.ini` (located in your game directory)
+
+2. **Add Steam launch options:**
+   - Right-click Dark Souls III in Steam → Properties → Launch Options
+   - Add this command:
+   ```
+   cmd=(%command%); cmd[-1]=ds3sc_launcher.exe; "${cmd[@]}"
+   ```
+
+3. **Launch Dark Souls III** via Steam as normal!
+
+## Disabling the Mod
+
+To disable the mod and play vanilla Dark Souls III:
+
+* Simply remove the launch options you added in Steam (right-click Dark Souls III → Properties → Launch Options → delete the command).
 
 ## Troubleshooting
 
-Here are some common issues you might encounter and how to resolve them:
-
 ### 1. Script not running or "Permission denied"
 
-*   **Issue:** When you try to run the script, you get an error like "Permission denied."
-*   **Solution:** You likely forgot to make the script executable. Follow the steps in the "Make the Script Executable" section above using `chmod +x`.
+* **Issue:** When you try to run the script, you get an error like "Permission denied."
+* **Solution:** You likely forgot to make the script executable. Follow the steps in the "Make the Script Executable" section above using `chmod +x`.
 
-### 2. "command not found" errors (e.g., `curl`, `wget`, `unzip`)
+### 2. "command not found" error for `unzip`
 
-*   **Issue:** The script exits with an error indicating a command like `curl`, `wget`, or `unzip` is not found.
-*   **Solution:** These are external tools the script relies on. Ensure they are installed on your system.
-    *   **Debian/Ubuntu:** `sudo apt install curl wget unzip`
-    *   **Fedora:** `sudo dnf install curl wget unzip`
-    *   **Arch Linux:** `sudo pacman -S curl wget unzip`
-    *   (Adjust for your specific distribution's package manager if different.)
+* **Issue:** The script exits with an error indicating `unzip` is not found.
+* **Solution:** Install unzip using your package manager:
+    * **Debian/Ubuntu:** `sudo apt install unzip`
+    * **Fedora:** `sudo dnf install unzip`
+    * **Arch Linux:** `sudo pacman -S unzip`
 
-### 3. "Could not find Elden Ring 'Game' directory"
+### 3. "Dark Souls III 'Game' directory not found"
 
-*   **Issue:** The script cannot locate your Elden Ring installation.
-*   **Solution:**
-    *   Ensure Elden Ring is installed via Steam and that you've launched it at least once.
-    *   Verify the default paths the script checks:
-        *   `~/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/ELDEN RING/Game` (for Flatpak Steam)
-        *   `~/.steam/steam/steamapps/common/ELDEN RING/Game` (for native Steam)
-    *   If your installation is in a non-standard location (e.g., on a different drive or a custom Steam library folder), you might need to manually adjust the `find_game_directory` function in the script or consider adding a command-line argument for a custom path (an advanced modification).
+* **Issue:** The script cannot locate your Dark Souls III installation.
+* **Solution:**
+    * Ensure Dark Souls III is installed via Steam.
+    * Edit the `GAME_DIR` variable in the script to match your actual installation path (see step 4 above).
 
-### 4. "Download failed" or "Could not find a download URL"
+### 4. "Could not find a 'DS3 Seamless Co-op*.zip' file"
 
-*   **Issue:** The script fails to download the mod zip file.
-*   **Solution:**
-    *   Check your internet connection.
-    *   The GitHub API might be temporarily unavailable or the repository structure for releases might have changed. Try running the script again after some time.
-    *   Manually visit `https://github.com/LukeYui/EldenRingSeamlessCoopRelease/releases/latest` in your browser to see if the `ersc.zip` file is present and accessible.
+* **Issue:** The script cannot find the mod zip in your Downloads folder.
+* **Solution:**
+    * Make sure you've downloaded the mod from [Nexus Mods](https://www.nexusmods.com/darksouls3/mods/1895).
+    * Ensure the zip file name starts with "DS3 Seamless Co-op" and is in your `~/Downloads` folder.
+    * Alternatively, provide the full path to the zip file as an argument: `./ds3sc-update.sh /path/to/mod.zip`
 
-### 5. Game not launching with mod after update
+### 5. Game not launching with mod
 
-*   **Issue:** The script completes successfully, but the game launches vanilla or crashes.
-*   **Solution:**
-    *   Ensure you are launching the game directly from Steam.
-    *   Verify that `start_protected_game.exe` in your game's `Game` directory is indeed the `ersc_launcher.exe` (check its size/date, or try running it directly if you have Wine installed).
-    *   If you previously had other mods installed, they might be conflicting. Try a clean install of Elden Ring and then apply the Seamless Co-op mod using this script.
-    *   Use Steam's "Verify integrity of game files..." feature to restore the original executable, then try running the script again.
+* **Issue:** The game launches vanilla instead of the modded version.
+* **Solution:**
+    * Double-check that the Steam launch options are set correctly.
+    * Verify that `ds3sc_launcher.exe` exists in your game directory.
+    * Ensure you're launching the game through Steam.
+
+### 6. "This script cannot be run as root"
+
+* **Issue:** You get an error about running as root.
+* **Solution:** Run the script as your normal user, not with `sudo`.
+
+## Credits
+
+* **Mod:** [Dark Souls 3 Seamless Co-op](https://www.nexusmods.com/darksouls3/mods/1895) on Nexus Mods
+* **Script:** Based on the [Elden Ring Seamless Co-op Updater](https://github.com/youp211/ERSC-Updater-Linux/) by youp211
